@@ -50,7 +50,7 @@ while(True):
         (x_1, y_1, w, h, text) = (data['left'][i], data['top'][i], data['width'][i], data['height'][i], data['text'][i].encode("utf-8"))
         # y_1 = img.shape[0] - y_1
         # y_2 = img.shape[0] - y_2
-        if (len(text) > 0):
+        if (len(text.decode("utf-8").strip()) > 0):
             y_2 = y_1 + h
             x_2 = x_1 + w
             print(text)
@@ -59,16 +59,20 @@ while(True):
             # print(y_1)
             # print(x_2)
             # print(y_2)
-            cv2.rectangle(im, (int(x_1), int(y_1)), (int(x_2), int(y_2)), (255, 255, 255), -1)
+            average0 = np.median(frame[y_1:y_2, x_1:x_2, 0])
+            average1 = np.median(frame[y_1:y_2, x_1:x_2, 1])
+            average2 = np.median(frame[y_1:y_2, x_1:x_2, 2])
+            cv2.rectangle(frame, (int(x_1), int(y_1)), (int(x_2), int(y_2)), (average0, average1, average2), -1)
     for i in range(n):
         (x_1, y_1, w, h, text) = (data['left'][i], data['top'][i], data['width'][i], data['height'][i], data['text'][i].encode("utf-8"))
-        if (len(text) > 0):
+        if (len(text.decode("utf-8").strip()) > 0):
             y_2 = y_1 + h
             x_2 = x_1 + w
             # translated = "VELOCIDAD" if (text == "SPEED") else "L?MITE" 
             # translated = translator.translate(text, dest="es", src="en").text.encode("utf-8")
-            cv2.putText(im, text, (x_1, y_2), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
-    cv2.imshow('frame', im)
+            # print(type(text))
+            cv2.putText(frame, text.decode("utf-8"), (x_1, y_2), cv2.FONT_HERSHEY_COMPLEX, max((x_2 - x_1) / 200, 0.3), (0, 0, 0), 1, cv2.LINE_AA)
+    cv2.imshow('frame', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
