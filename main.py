@@ -101,8 +101,8 @@ for filename in os.listdir(directory):
             else:
                 s = s.strip()
                 if len(s) > 0:
-                    translated = translator.translate(s, dest="es", src="en").text.encode("ascii", errors="ignore")
-                    # translated = s.decode("ascii", errors="ignore")
+                    # translated = translator.translate(s, dest="es", src="en").text.encode("ascii", errors="ignore")
+                    translated = s.decode("ascii", errors="ignore")
                     
                     width = x - sx
                     # cv2.rectangle(frame, (int(sx), int(y)), (int(x), int(y + height)), (0, 0, 0), -1)
@@ -114,8 +114,8 @@ for filename in os.listdir(directory):
                 y = y_1
         s = s.strip()
         if len(s) > 0:
-            translated = translator.translate(s, dest="es", src="en").text.encode("ascii", errors="ignore")
-            # translated = s.decode("ascii", errors="ignore")
+            # translated = translator.translate(s, dest="es", src="en").text.encode("ascii", errors="ignore")
+            translated = s.decode("ascii", errors="ignore")
             
             width = x - sx
             # cv2.rectangle(frame, (int(sx), int(y)), (int(x), int(y + height)), (0, 0, 0), -1)
