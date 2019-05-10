@@ -44,11 +44,11 @@ for filename in os.listdir(directory):
         # Image.fromarray(frame).save("frame.png")
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # gray = cv2.medianBlur(gray, 3)
-        gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 10)
+        # gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 10)
         kernel = np.ones((1, 1), np.uint8)
         img = cv2.dilate(gray, kernel, iterations=1)
         img = cv2.erode(img, kernel, iterations=1)
-        img = cv2.bilateralFilter(img, 9, 75, 75)
+        # img = cv2.bilateralFilter(img, 9, 75, 75)
         # cv2.rectangle(img, (267, 256), (267+50, 256+26), (0, 255, 0), 10)
         im = np.array(img)
         # saveim = Image.fromarray(im)
@@ -72,7 +72,7 @@ for filename in os.listdir(directory):
             (x_1, y_1, w, h, text) = (data['left'][i], data['top'][i], data['width'][i], data['height'][i], data['text'][i].encode("utf-8"))
             # y_1 = img.shape[0] - y_1
             # y_2 = img.shape[0] - y_2
-            if (len(text.decode("utf-8").strip()) > 0):
+            if (len(text.decode("utf-8").strip()) > 0 or True):
                 y_2 = y_1 + h
                 x_2 = x_1 + w
                 # print(text)
@@ -90,9 +90,10 @@ for filename in os.listdir(directory):
         sx = 0
         height = 0
         s = ""
+        print("NUMBER OF RESULTS: " + str(n))
         for i in range(n):
             (x_1, y_1, w, h, text) = (data['left'][i], data['top'][i], data['width'][i], data['height'][i], data['text'][i].encode("utf-8"))
-            if len(text.strip()) == 0:
+            if len(text.strip()) == 0 or False:
                 continue
             if x_1 - x < w / 2 and abs(y_1 - y) < h and abs(height - h) < h:
                 s = s + " " + text
@@ -100,7 +101,7 @@ for filename in os.listdir(directory):
                 height = max(h, height)
             else:
                 s = s.strip()
-                if len(s) > 0:
+                if len(s) > 0 or True:
                     # translated = translator.translate(s, dest="es", src="en").text.encode("ascii", errors="ignore")
                     translated = s.decode("ascii", errors="ignore")
                     
@@ -113,7 +114,7 @@ for filename in os.listdir(directory):
                 height = h
                 y = y_1
         s = s.strip()
-        if len(s) > 0:
+        if len(s) > 0 or True:
             # translated = translator.translate(s, dest="es", src="en").text.encode("ascii", errors="ignore")
             translated = s.decode("ascii", errors="ignore")
             
