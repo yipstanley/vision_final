@@ -17,7 +17,7 @@ cap = cv2.VideoCapture(0)
 i = 5
 frame_counter = 0
 translator = Translator()
-frame = np.array(Image.open("frame.png"))
+# frame = np.array(Image.open("frame.png"))
 
 def drawString(frame, s, x, y, width, height):
     scale = 0
@@ -31,10 +31,16 @@ def drawString(frame, s, x, y, width, height):
         size = b
     cv2.putText(frame, s, (x, y + height), cv2.FONT_HERSHEY_COMPLEX, scale, (0, 0, 0), 1, cv2.LINE_AA)
 
-while(True):
+import os
+
+directory = "./images"
+
+for filename in os.listdir(directory):
+    print("opening " + filename)
+    frame = np.array(Image.open(os.path.join(directory, filename)))
     # ret, frame = cap.read()
     key = cv2.waitKey(1) & 255
-    if key == ord(' '):
+    if True or key == ord(' '):
         # Image.fromarray(frame).save("frame.png")
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # gray = cv2.medianBlur(gray, 3)
@@ -114,14 +120,17 @@ while(True):
             width = x - sx
             # cv2.rectangle(frame, (int(sx), int(y)), (int(x), int(y + height)), (0, 0, 0), -1)
             drawString(frame, translated, sx, y, width, height)
-                
-        cv2.imshow('frame', frame)
-        break
+        print("translated")
+        # cv2.imshow('frame', frame)
     else:
-        cv2.imshow('frame', frame)
-    if key == ord('q'):
-        break
+        pass
+        # cv2.imshow('frame', frame)
+    path = os.path.splitext(filename)        
+    print("saving " + os.path.join("results", path[0] + "_translated" + path[1]))
+    Image.fromarray(frame).save(os.path.join("results", path[0] + "_translated" + path[1]))
+    # if key == ord('q'):
+        # break
 
-cv2.waitKey(-1)
+# cv2.waitKey(-1)
 cap.release()
-cv2.destroyAllWindows()
+# cv2.destroyAllWindows()
