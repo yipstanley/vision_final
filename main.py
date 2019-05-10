@@ -20,9 +20,9 @@ translator = Translator()
 
 while(True):
     ret, frame = cap.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray1 = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     # gray = cv2.medianBlur(gray, 3)
-    gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 10)
+    gray = cv2.adaptiveThreshold(gray1, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 10)
     kernel = np.ones((1, 1), np.uint8)
     img = cv2.dilate(gray, kernel, iterations=1)
     img = cv2.erode(img, kernel, iterations=1)
@@ -73,7 +73,8 @@ while(True):
             # print(type(text))
             cv2.putText(frame, text.decode("utf-8"), (x_1, y_2), cv2.FONT_HERSHEY_COMPLEX, max((x_2 - x_1) / 200, 0.3), (0, 0, 0), 1, cv2.LINE_AA)
             # cv2.putText(im, text.decode("utf-8"), (x_1, y_2), cv2.FONT_HERSHEY_COMPLEX, max((x_2 - x_1) / 200, 0.3), (0, 0, 0), 1, cv2.LINE_AA)
-    cv2.imshow('frame', frame)
+    horiz = np.hstack((gray1, im))
+    cv2.imshow('frame', horiz)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
