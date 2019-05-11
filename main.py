@@ -41,7 +41,7 @@ for filename in os.listdir(directory):
     # do various preprocessing filter steps
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     # gray = cv2.medianBlur(gray, 3)
-    gray = cv2.adaptiveThreshold(gray1, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 10)
+    gray = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21, 10)
     kernel = np.ones((1, 1), np.uint8)
     img = cv2.dilate(gray, kernel, iterations=1)
     img = cv2.erode(img, kernel, iterations=1)
